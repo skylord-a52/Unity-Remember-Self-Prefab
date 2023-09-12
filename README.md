@@ -6,7 +6,7 @@ This repository provides a few scripts that allow developers to easily create an
 
 ## How to use:
 
-Copy **RememberPrefab.cs** and **RememberPrefabCustomEditor.cs** to appropriate places within your project.
+Copy **RememberPrefab.cs** to your scripts folder and **RememberPrefabCustomEditor.cs** to a folder named Editor.
 
 Add **RememberPrefab** as a component to the desired object and select the appropriate prefab reference in the inspector.
 
