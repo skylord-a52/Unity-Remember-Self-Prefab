@@ -17,4 +17,4 @@ Call `GetComponent<RememberPrefab>().Prefab` to get a reference to the prefab in
 
 ## Known Issues
 
-None
+Does not work in builds! Oops!
