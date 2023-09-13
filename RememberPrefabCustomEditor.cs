@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.Search;
 using UnityEngine;
@@ -33,8 +34,7 @@ public class RememberPrefabCustomEditor : UnityEditor.Editor {
         
         // if this is the first time it's set
         if (Target.Prefab == null && prefab != null) {
-            pathProperty.stringValue = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(prefab);
-            Target.MarkChanged();
+            AttemptChange(prefab);
         }
         // if the user sets to null
         else if (prefab == null && Target.Prefab != null) {
@@ -43,10 +43,28 @@ public class RememberPrefabCustomEditor : UnityEditor.Editor {
         }
         // if it changes from non-null to non-null
         else if (Target.Prefab != null && prefab.GetInstanceID() != Target.Prefab.GetInstanceID()) {
-            pathProperty.stringValue = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(prefab);
-            Target.MarkChanged();
+            AttemptChange(prefab);
         }
         
         serializedObject.ApplyModifiedProperties();
+    }
+
+    private void AttemptChange(GameObject prefab) {
+
+        var newPath = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(prefab);
+        
+        if (!newPath.Contains("Resources/")) {
+            Debug.LogWarning("Prefabs stored in RememberPrefab must be inside of a Resources folder");
+            return;
+        }
+
+        var splitPaths = newPath.Split("Resources/");
+        var reducedPath = splitPaths.Last();
+
+        splitPaths = reducedPath.Split(".");
+        reducedPath = splitPaths[0];
+
+        pathProperty.stringValue = reducedPath;
+        Target.MarkChanged();
     }
 }

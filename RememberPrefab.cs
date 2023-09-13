@@ -1,9 +1,6 @@
-using UnityEditor;
 using UnityEngine;
-
 /// <summary>
 /// Component that contains a single variable -- a reference to a prefab object.
-/// This must be set by other code, or in the inspector.
 /// </summary>
 public class RememberPrefab: MonoBehaviour {
 
@@ -27,7 +24,7 @@ public class RememberPrefab: MonoBehaviour {
             }
             
             if (_prefabCached == null || _hasChanged) {
-                _prefabCached = (GameObject) AssetDatabase.LoadAssetAtPath(Path, typeof(GameObject));
+                _prefabCached = Resources.Load<GameObject>(Path);
                 _hasChanged = false;
             }
             
