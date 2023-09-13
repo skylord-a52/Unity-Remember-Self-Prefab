@@ -1,7 +1,5 @@
-using System;
 using System.Linq;
 using UnityEditor;
-using UnityEditor.Search;
 using UnityEngine;
 
 [CustomEditor(typeof(RememberPrefab))]
